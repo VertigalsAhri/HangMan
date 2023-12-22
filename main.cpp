@@ -51,3 +51,43 @@ int loginMeni(){
     system("cls");
 
 }
+void clanMeni() {
+
+    while (true) {
+        cout << "\t \t MENI";
+        cout << linija;
+        cout << "1. Zapocni igru " << endl;
+        cout << "2. Scoreboard " << endl;
+        cout << "3. EXIT " << endl;
+
+        int izbor;
+        cout << "Unesite izbor: ";
+        cin >> izbor;
+        system("cls");
+
+        switch (izbor) {
+
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+                return;
+            default:
+                cout << "Nepostojeca opcija!" << endl;
+        }
+    }
+}
+
+int main() {
+    int izbor;
+    cout << "----- MENI -----" << endl;
+    cout << "\tUnesite izbor: ";
+    cin >> izbor;
+    switch(izbor){
+
+    }
+    return 0;
+}
