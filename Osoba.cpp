@@ -10,8 +10,7 @@
 using namespace std;
 
 Osoba::Osoba() {
-    this->ime="Neko";
-    this->prezime="Drugi";
+
 }
 
 Osoba::Osoba(std::string i, std::string p) {

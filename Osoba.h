@@ -11,16 +11,15 @@
 using namespace std;
 
 class Osoba {
-private:
+protected:
     string ime, prezime;
 public:
-
     Osoba();
     Osoba(string i, string p);
     void setIme();
     void setPrezime();
-    string getIme();
-    string getPrezime();
+    virtual string getIme();
+    virtual string getPrezime();
     ~Osoba(){};
 };
 

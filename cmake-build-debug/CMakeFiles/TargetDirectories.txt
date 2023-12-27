@@ -1,3 +1,0 @@
-C:/Users/DT User/OneDrive/Radna površina/HangMan/cmake-build-debug/CMakeFiles/HangMan.dir
-C:/Users/DT User/OneDrive/Radna površina/HangMan/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/DT User/OneDrive/Radna površina/HangMan/cmake-build-debug/CMakeFiles/rebuild_cache.dir
