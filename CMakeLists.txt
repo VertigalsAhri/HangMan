@@ -10,4 +10,6 @@ add_executable(HangMan
         Korisnik.h
         main.cpp
         Osoba.cpp
-        Osoba.h)
+        Osoba.h
+        Rijec.h
+        Rijec.cpp)
