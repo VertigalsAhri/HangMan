@@ -1,11 +1,120 @@
 #include <iostream>
-#include "Osoba.h"
+#include <fstream>
+#include <vector>
+#include <string>
+#include <memory>
+#include <ctime>
+#include <cstdlib>
+#include "Korisnik.h"
+#include "Rijec.h"
 
 using namespace std;
-char * linija = "\n ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+
+
+// -------------------------------------------------GLOBALNE VARIJABLE------------------------------------------------------------
+
+void clanMeni();
+void AdminMeni();
+
+static int brKorisnika;
+
+vector<Korisnik> korisnici;
+vector<string> rijeci={"KONJ", "KOBILA"};
+
+//-------------------------------------------------------------------------------------------------------------------------------
 
 void AdminMeni(){
 
+}
+void VektorAdmina(){
+    try {
+    string filePath = "C:\\Users\\User\\CLionProjects\\HangMan\\admini.txt"; //popraviti!!
+    //Ovo treba popraviti nisam znala drugacije
+        ifstream datoteka(filePath);
+        if (datoteka.is_open()) {
+
+            string ime, prezime, username, password;
+            double bodovi;
+            string strbodovi= to_string(bodovi);
+
+            int i = 0;
+
+            string red;
+            while (getline(datoteka, red)) {
+                if (red.empty()) {
+                    continue;
+                }
+
+                ime = red;
+                getline(datoteka, prezime);
+                getline(datoteka, username);
+                getline(datoteka, password);
+                getline(datoteka, strbodovi);
+
+                if (i >= 100) {
+                    cout << "Prekoracen je broj clanova u datoteci." << endl;
+                    break;
+                }
+
+                korisnici.emplace_back(ime, prezime, username, password, admin, bodovi);
+
+                i++;
+            }
+        } else {
+            throw "Nemoguce otvoriti datoteku! \n";
+        }
+
+        datoteka.close();
+    }catch(const char *poruka){
+        cout << poruka << endl;
+    }
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------KORISNIK VEKTOR----------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void VektorKorisnika(){
+    try{
+    string filePath="C:\\Users\\User\\CLionProjects\\HangMan\\k.txt";
+    ifstream datoteka(filePath);
+    if (datoteka.is_open()) {
+
+        string prezime, ime, username, password;
+        double bodovi;
+        string strbodovi= to_string(bodovi);
+
+        int i = 0;
+
+        string red;
+        while (getline(datoteka, red)) {
+            if (red.empty()) {
+                continue;
+            }
+
+            ime = red;
+            getline(datoteka, prezime);
+            getline(datoteka, username);
+            getline(datoteka, password);
+            getline(datoteka, strbodovi);
+
+            if (i >= 100) {
+                cout << "Prekoracen je broj clanova u datoteci." << endl;
+                break;
+            }
+
+            korisnici.emplace_back(ime, prezime, username, password, korisnik, bodovi);
+
+        i++;
+    }
+    }else{
+        throw "Nemoguce otvoriti datoteku!\n " ;
+    }
+
+    datoteka.close();
+        }catch(const char *poruka){
+        cout << poruka << endl;
+    }
 }
 
 bool login() {
