@@ -27,8 +27,13 @@ private:
 public:
     Rijec();
 
-    Rijec(string rijec);
+    Rijec(string rijec, vector<Korisnik> prosljedjeni);
+
     vector<Korisnik>& getKorisnici();
+
+    bool Pobjeda();
+
+    vector<Korisnik>& Pogadjanje(int i);
 };
 
 
