@@ -117,17 +117,100 @@ void VektorKorisnika(){
     }
 }
 
-bool login() {
-    string username;
-    string password;
-    cin.ignore();
-    cout << linija << "\t Login " << linija;
-    cout << "Korisnicko ime: ";
-    cin >> username;
-    cout << "Lozinka: ";
-    cin >> password;
+// -------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------REGISTRACIJA KORISNIKA--------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void registracija_korisnika(){
+    Korisnik k;
+    k.setIme();
+    k.setPrezime();
+    do{
+        k.setUsername();
+    }while(provjeraUsername(k.getUsername()));
+
+    k.setPassword();
+    k.setVrsta(korisnik);
+    k.setBodovi(0);
+    korisnici.push_back(k);
+
+    string filePath="C:\\Users\\User\\CLionProjects\\probniprojekat2\\k.txt";
+    ofstream datoteka_;
+    datoteka_.open(filePath, ios::app);
+    datoteka_<< k.getIme()<< "\n";
+    datoteka_<< k.getPrezime()<< "\n";
+    datoteka_<< k.getUsername()<< "\n";
+    datoteka_<< k.getPassword()<< "\n";
+    datoteka_<<k.getBodovi()<<"\n";
+    datoteka_<< "\n";
+    datoteka_.close();
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------LOGIN----------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+int login(){
+    Korisnik k;
+    k.setUsername();
+    k.setPassword();
+    for(int i=0; i<korisnici.size(); i++){
+        if(k.getUsername()==korisnici[i].getUsername() && k.getPassword()==korisnici[i].getPassword() && korisnici[i].getVrsta()==korisnik){
+            brKorisnika=i;
+            clanMeni();
+        }else if(k.getUsername()==korisnici[i].getUsername() && k.getPassword()==korisnici[i].getPassword() && korisnici[i].getVrsta()==admin){
+            AdminMeni();
+        }
+    }
+
+    system("cls");
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------IGRA----------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+void ispis(){
+    srand(time(nullptr));
+    rand();
+    int broj=rand()%rijeci.size();
+    string r=rijeci[broj];
+    Rijec rijec(r, korisnici);
+
+    korisnici[brKorisnika].SETBodovi(0);
+
+
+
+    korisnici=rijec.Pogadjanje(brKorisnika);
+
+
+
+    string filePath="C:\\Users\\User\\CLionProjects\\probniprojekat2\\k.txt";
+    ofstream datoteka_;
+    datoteka_.open(filePath);
+    for(auto k:korisnici){
+        datoteka_<< k.getIme()<< "\n";
+        datoteka_<< k.getPrezime()<< "\n";
+        datoteka_<< k.getUsername()<< "\n";
+        datoteka_<< k.getPassword()<< "\n";
+        datoteka_<<k.getBodovi()<<"\n";
+        datoteka_<< "\n";
+    }
+    datoteka_.close();
 
 }
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------SCOREBOARD----------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void score(){
+    cout << "Username" << "\t Bodovi" << endl;
+    for(auto i: korisnici){
+        cout << i;
+    }
+}
+
 
 int loginMeni(){
     while (true) {
@@ -189,6 +272,8 @@ void clanMeni() {
         }
     }
 }
+
+
 
 int main() {
     int izbor;
