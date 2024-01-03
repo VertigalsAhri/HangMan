@@ -38,15 +38,21 @@ vector<Korisnik>&  Rijec::Pogadjanje(int i) {
         cin >> slovo;
         cout << endl;
         slovo = toupper(slovo);
+        bool nadjeno=false;
 
         for (int i = 0; i < this->rijec_pog.length(); i++) {
             if (this->rijec_pog[i] == slovo) {
                 this->sakrivenaRijec[i] = slovo;
+                nadjeno=true;
                 system("CLS");
 
             }
         }
-
+        if(nadjeno){
+            korisnici[i].setBodovi(0.2);
+        }else{
+            korisnici[i].setBodovi(-0.1);
+        }
 
         for (int i = 0; i < slova.size(); i++) {
             if (slovo == slova[i]) {
@@ -59,6 +65,9 @@ vector<Korisnik>&  Rijec::Pogadjanje(int i) {
         }
     }
     system("CLS");
+    if(Pobjeda()== true){
+        cout<<"Pogodili ste rijec "<<rijec_pog<<endl;
+    }
 
     return korisnici;
 }
