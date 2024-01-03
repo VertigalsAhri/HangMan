@@ -210,13 +210,17 @@ void score(){
         cout << i;
     }
 }
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------LOGIN MENI---------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
 
 
-int loginMeni(){
+void loginMeni(){
     while (true) {
-        cout << linija << "\t  LOGIN " << linija;
+        //cout << linija << "\t  LOGIN " << linija;
         cout << "1. Login" << endl;
         cout << "2. Registracija clana" << endl;
+        cout << "0. dodaj ruc" << endl;
         cout << "3. Exit" << endl;
 
         int opcija;
@@ -225,63 +229,79 @@ int loginMeni(){
         system("cls");
         switch (opcija) {
             case 1:
+                login();
                 system("cls");
+
                 break;
             case 2:
+                registracija_korisnika();
+                system("cls");
+                break;
+            case 0:
 
                 system("cls");
+
                 break;
             case 3:
                 cout << "Exiting..." << endl;
                 system("cls");
-                return 1;
+
+                exit(0);
+
             default:
                 cout << "Netacan odabir. Pokusajte ponovo." << endl;
         }
     }
-
-    system("cls");
-
 }
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------CLAN MENI----------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
 void clanMeni() {
 
     while (true) {
-        cout << "\t \t MENI";
-        cout << linija;
+
+        cout << "\t \t MENI" << endl;
+        //cout << linija;
         cout << "1. Zapocni igru " << endl;
         cout << "2. Scoreboard " << endl;
         cout << "3. EXIT " << endl;
 
         int izbor;
+
         cout << "Unesite izbor: ";
         cin >> izbor;
-        system("cls");
 
         switch (izbor) {
 
             case 1:
-
+                ispis();
                 break;
             case 2:
-
+                cin.ignore();
+                score();
                 break;
             case 3:
-                return;
+                loginMeni();
+                system("CLS");
             default:
                 cout << "Nepostojeca opcija!" << endl;
         }
     }
 }
 
-
+// -------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------MAIN------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
 
 int main() {
-    int izbor;
-    cout << "----- MENI -----" << endl;
-    cout << "\tUnesite izbor: ";
-    cin >> izbor;
-    switch(izbor){
 
-    }
+    VektorKorisnika();
+    VektorAdmina();
+
+    loginMeni();
+
     return 0;
 }

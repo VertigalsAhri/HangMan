@@ -20,9 +20,6 @@ CMAKE_BUILD_TYPE:UNINITIALIZED=Debug
 //Value Computed by CMake.
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=C:/Users/Hello Belmin/Documents/GitHub/HangMan/cmake-build-debug/CMakeFiles/pkgRedirects
 
-//No help, variable specified on the command line.
-CMAKE_MAKE_PROGRAM:UNINITIALIZED=E:/CLion 2022.3.2/bin/ninja/win/x64/ninja.exe
-
 
 ########################
 # INTERNAL cache entries
@@ -43,9 +40,9 @@ CMAKE_CPACK_COMMAND:INTERNAL=E:/CLion 2022.3.2/bin/cmake/win/x64/bin/cpack.exe
 //Path to ctest program executable.
 CMAKE_CTEST_COMMAND:INTERNAL=E:/CLion 2022.3.2/bin/cmake/win/x64/bin/ctest.exe
 //Name of external makefile project generator.
-CMAKE_EXTRA_GENERATOR:INTERNAL=
+CMAKE_EXTRA_GENERATOR:INTERNAL=CodeBlocks
 //Name of generator.
-CMAKE_GENERATOR:INTERNAL=Ninja
+CMAKE_GENERATOR:INTERNAL=MinGW Makefiles
 //Generator instance identifier.
 CMAKE_GENERATOR_INSTANCE:INTERNAL=
 //Name of generator platform.
