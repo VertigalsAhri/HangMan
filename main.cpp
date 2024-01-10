@@ -15,11 +15,12 @@ using namespace std;
 
 void clanMeni();
 void AdminMeni();
+void  loginMeni();
 
 static int brKorisnika;
 
 vector<Korisnik> korisnici;
-vector<string> rijeci={"KONJ", "KOBILA"};
+vector<string> rijeci;
 
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------VEKTOR RIJECI------------------------------------------------------------
@@ -140,46 +141,49 @@ void VektorAdmina(){
 
 void VektorKorisnika(){
     try{
-    string filePath="C:\\Users\\User\\CLionProjects\\HangMan\\k.txt";
-    ifstream datoteka(filePath);
-    if (datoteka.is_open()) {
+        string filePath="C:\\NTP\\probniprojekat3\\k.txt";
+        ifstream datoteka(filePath);
+        if (datoteka.is_open()) {
 
-        string prezime, ime, username, password;
-        double bodovi;
-        string strbodovi= to_string(bodovi);
+            string prezime, ime, username, password;
+            double bodovi;
+            string strbodovi;
 
-        int i = 0;
+            int i = 0;
 
-        string red;
-        while (getline(datoteka, red)) {
-            if (red.empty()) {
-                continue;
+            string red;
+            while (getline(datoteka, red)) {
+                if (red.empty()) {
+                    continue;
+                }
+
+                ime = red;
+                getline(datoteka, prezime);
+                getline(datoteka, username);
+                getline(datoteka, password);
+                getline(datoteka, strbodovi);
+
+                if (i >= 100) {
+                    cout << "Prekoracen je broj clanova u datoteci." << endl;
+                    break;
+                }
+
+                bodovi=stod(strbodovi);
+
+                korisnici.emplace_back(ime, prezime, username, password, korisnik, bodovi);
+
+                i++;
             }
+        }else{
+            throw "Nemoguce otvoriti datoteku!\n " ;
+        }
 
-            ime = red;
-            getline(datoteka, prezime);
-            getline(datoteka, username);
-            getline(datoteka, password);
-            getline(datoteka, strbodovi);
-
-            if (i >= 100) {
-                cout << "Prekoracen je broj clanova u datoteci." << endl;
-                break;
-            }
-
-            korisnici.emplace_back(ime, prezime, username, password, korisnik, bodovi);
-
-        i++;
-    }
-    }else{
-        throw "Nemoguce otvoriti datoteku!\n " ;
-    }
-
-    datoteka.close();
-        }catch(const char *poruka){
+        datoteka.close();
+    }catch(const char *poruka){
         cout << poruka << endl;
     }
 }
+
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------ADMIN MENI---------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
