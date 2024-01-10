@@ -27,7 +27,7 @@ vector<string> rijeci={"KONJ", "KOBILA"};
 
 void VektorRijeci(){
     try {
-        string filePath = "C:\\Hangman\\rijeci.txt"; 
+        string filePath = "C:\\HangMan\\rijeci.txt";
         ifstream datoteka(filePath);
         if (datoteka.is_open()) {
 
@@ -47,6 +47,46 @@ void VektorRijeci(){
         cout << poruka << endl;
     }
 }
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------DODAJ RIJEC--------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void dodajRijec(){
+    int n;
+    cout<<"Unesite koliko zelite unijeti novih rijeci ";
+    cin>>n;
+    string rijec,a;
+    char r;
+    for(int i=0; i<n; i++){
+        cout<<"Unesite "<<i+1<<" rijec: ";
+        cin>>rijec;
+        for (int i=0; i<rijec.length(); i++){
+            r= toupper(rijec[i]);
+            a+=r;
+        }
+        rijec=a;
+        rijeci.push_back(rijec);
+
+    }
+    string filePath="C:\\NTP\\HangMan\\rijeci.txt";
+    ofstream datoteka_;
+    datoteka_.open(filePath);
+    for(int i=0; i<rijeci.size(); i++){
+        datoteka_ << rijeci[i] <<"\n";
+    }
+
+    datoteka_.close();
+
+}
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------ADMIN VEKTOR-------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
 void AdminMeni(){
 
 }
@@ -267,7 +307,7 @@ void loginMeni(){
         //cout << linija << "\t  LOGIN " << linija;
         cout << "1. Login" << endl;
         cout << "2. Registracija clana" << endl;
-        cout << "0. dodaj ruc" << endl;
+        cout << "0. Dodaj rijec" << endl;
         cout << "3. Exit" << endl;
 
         int opcija;
