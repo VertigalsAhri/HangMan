@@ -21,8 +21,32 @@ static int brKorisnika;
 vector<Korisnik> korisnici;
 vector<string> rijeci={"KONJ", "KOBILA"};
 
-//-------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------VEKTOR RIJECI------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
 
+void VektorRijeci(){
+    try {
+        string filePath = "C:\\Hangman\\rijeci.txt"; 
+        ifstream datoteka(filePath);
+        if (datoteka.is_open()) {
+
+            string rijec;
+
+            string red;
+            while (getline(datoteka, red)) {
+               rijec=red;
+               rijeci.push_back(rijec);
+            }
+        } else {
+            throw "Nemoguce otvoriti datoteku! \n";
+        }
+
+        datoteka.close();
+    }catch(const char *poruka){
+        cout << poruka << endl;
+    }
+}
 void AdminMeni(){
 
 }
