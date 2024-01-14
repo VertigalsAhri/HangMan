@@ -235,13 +235,21 @@ bool provjeraUsername(string& username) {
     return false;
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------REGISTRACIJA KORISNIKA--------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
 
 void registracija_korisnika(){
-    Korisnik k;
+    unique_ptr<Korisnik> temp= make_unique<Korisnik>();
+    temp->setIme();
+    temp->setPrezime();
+    do{
+        temp->setUsername();
+    }while(provjeraUsername(temp->getUsername()));
+    temp->setPassword();
+    temp->setVrsta(korisnik);
+    temp->SETBodovi(0);
+    /*Korisnik k;
     k.setIme();
     k.setPrezime();
     do{
@@ -250,17 +258,20 @@ void registracija_korisnika(){
 
     k.setPassword();
     k.setVrsta(korisnik);
-    k.setBodovi(0);
-    korisnici.push_back(k);
+    k.SETBodovi(0);*/
 
+    int mjesto=korisnici.size()-4;
+    auto it =korisnici.begin()+mjesto;
+    korisnici.emplace(it, *temp);
 
+    string filePath="C:\\NTP\\probniprojekat3\\k.txt";
     ofstream datoteka_;
-    datoteka_.open("k.txt", ios::app);
-    datoteka_<< k.getIme()<< "\n";
-    datoteka_<< k.getPrezime()<< "\n";
-    datoteka_<< k.getUsername()<< "\n";
-    datoteka_<< k.getPassword()<< "\n";
-    datoteka_<<k.getBodovi()<<"\n";
+    datoteka_.open(filePath, ios::app);
+    datoteka_<< temp->getIme()<< "\n";
+    datoteka_<< temp->getPrezime()<< "\n";
+    datoteka_<< temp->getUsername()<< "\n";
+    datoteka_<< temp->getPassword()<< "\n";
+    datoteka_<< temp->getBodovi()<<"\n";
     datoteka_<< "\n";
     datoteka_.close();
 }
