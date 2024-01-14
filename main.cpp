@@ -338,6 +338,98 @@ void reset_bodova_korisnika(){
     cin.ignore();
 }
 
+// -------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------BRISANJE KORISNIKA----------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void brisanje_korisnika(){
+    pregled_korisnika();
+    int n;
+    do{
+        try{
+            cout << "Unesite redni broj korisnika kojeg zelite obrisati: ";
+            cin >> n;
+            if(n<1 || n>korisnici.size()-4){
+                throw n;
+            }
+        }catch(int n){
+            cout <<endl<< "Unos van opsega broja korisnika. Pokusajte ponovo!"<< endl;
+        }
+
+    }while(n<1 || n>korisnici.size()-4);
+    korisnici.erase(korisnici.begin() + n - 1);
+
+    cout << endl << "Korisnik je uspjesno obrisan!" << endl;
+
+    ofstream datoteka_;
+    datoteka_.open("k.txt");
+    for(int i=0; i<korisnici.size()-4;i++){
+        datoteka_<< korisnici[i].getIme()<< "\n";
+        datoteka_<< korisnici[i].getPrezime()<< "\n";
+        datoteka_<< korisnici[i].getUsername()<< "\n";
+        datoteka_<< korisnici[i].getPassword()<< "\n";
+        datoteka_<<korisnici[i].getBodovi()<<"\n";
+        datoteka_<< "\n";
+    }
+    datoteka_.close();
+
+
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------CLAN MENI FUNKCIJE---------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------IGRA----------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+void igra(){
+    srand(time(nullptr));
+    rand();
+    int broj=rand()%rijeci.size();
+    string r=rijeci[broj];
+    Rijec rijec(r, korisnici);
+
+
+    rijec.Pogadjanje(brKorisnika);
+    korisnici=rijec.getKorisnici();
+    VektorAdmina();
+
+
+    ofstream datoteka_;
+    datoteka_.open("k.txt");
+    for(int i=0; i<korisnici.size()-4; i++){
+        datoteka_<< korisnici[i].getIme()<< "\n";
+        datoteka_<< korisnici[i].getPrezime()<< "\n";
+        datoteka_<< korisnici[i].getUsername()<< "\n";
+        datoteka_<< korisnici[i].getPassword()<< "\n";
+        datoteka_<<korisnici[i].getBodovi()<<"\n";
+        datoteka_<< "\n";
+    }
+    datoteka_.close();
+
+}
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------SCOREBOARD---------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+void rekurzivniSort(int n, vector<Korisnik>& k) {
+    if (n== 1) return;
+
+    for (int i = 0; i < k.size() - 1; i++) {
+        if (k[i].getBodovi() < k[i + 1].getBodovi()) {
+            swap(k[i], k[i + 1]);
+        }
+    }
+
+    rekurzivniSort(n - 1, k);
+}
 
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------ADMIN MENI---------------------------------------------------------------
@@ -443,32 +535,7 @@ void registracija_korisnika(){
     datoteka_.close();
 }
 
-// -------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------BRISANJE KORISNIKA----------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
 
-void brisanje_korisnika(){
-    int n;
-    do{
-        cout << "Unesite redni broj korisnika kojeg zelite obrisati: ";
-        cin >> n;
-    }while(n<1 || n>korisnici.size()-4);
-    korisnici.erase(korisnici.begin() + n - 1);
-
-    ofstream datoteka_;
-    datoteka_.open("k.txt");
-    for(int i=0; i<korisnici.size()-4;i++){
-        datoteka_<< korisnici[i].getIme()<< "\n";
-        datoteka_<< korisnici[i].getPrezime()<< "\n";
-        datoteka_<< korisnici[i].getUsername()<< "\n";
-        datoteka_<< korisnici[i].getPassword()<< "\n";
-        datoteka_<<korisnici[i].getBodovi()<<"\n";
-        datoteka_<< "\n";
-    }
-    datoteka_.close();
-
-
-}
 
 // -------------------------------------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------LOGIN----------------------------------------------------------------
@@ -490,38 +557,6 @@ int login(){
     system("cls");
 }
 
-// -------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------ISPIS----------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
-
-
-void ispis(){
-    srand(time(nullptr));
-    rand();
-    int broj=rand()%rijeci.size();
-    string r=rijeci[broj];
-    Rijec rijec(r, korisnici);
-
-    korisnici[brKorisnika].SETBodovi(0);
-
-
-
-    korisnici=rijec.Pogadjanje(brKorisnika);
-
-
-    ofstream datoteka_;
-    datoteka_.open("k.txt");
-    for(int i=0; i<korisnici.size(); i++){
-        datoteka_<< korisnici[i].getIme()<< "\n";
-        datoteka_<< korisnici[i].getPrezime()<< "\n";
-        datoteka_<< korisnici[i].getUsername()<< "\n";
-        datoteka_<< korisnici[i].getPassword()<< "\n";
-        datoteka_<<korisnici[i].getBodovi()<<"\n";
-        datoteka_<< "\n";
-    }
-    datoteka_.close();
-
-}
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------SCOREBOARD----------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
@@ -598,7 +633,7 @@ void clanMeni() {
         switch (izbor) {
 
             case 1:
-                ispis();
+
                 break;
             case 2:
                 cin.ignore();
