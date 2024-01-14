@@ -216,10 +216,49 @@ void VektorKorisnika(){
 // ------------------------------------------------------ADMIN MENI---------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
 
+
+
 void AdminMeni(){
-    cout << "----- ADMIN MENI -----" << endl;
-    cout << "1. Pregled rijeci" << endl;
-    cout<<"2. Dodaj rijec\n";
+    while (true) {
+
+        cout << "----- ADMIN MENI -----" << endl;
+        cout << "1. Pregled rijeci" << endl;
+        cout << "2. Pregled korisnika " << endl;
+        cout << "3. Brisanje korisnika" << endl;
+        cout << "4. Dodaj rijec\n";
+        cout << "5. Ukloni rijec\n";
+        cout << "6. EXIT\n";
+        //RESETIRAJ BODOVE SVIH IGRACA
+
+        int izbor;
+
+        cout << "Unesite izbor: ";
+        cin >> izbor;
+
+        switch (izbor) {
+
+            case 1:
+                pregledRijeci();
+                break;
+            case 2:
+                pregled_korisnika();
+                break;
+            case 3:
+                brisanje_korisnika();
+                break;
+            case 4:
+                dodajRijec();
+                break;
+            case 5:
+                izbrisiRijec();
+                system("CLS");
+            case 6:
+                loginMeni();
+            default:
+                cout << "Nepostojeca opcija!" << endl;
+        }
+    }
+
 }
 
 
