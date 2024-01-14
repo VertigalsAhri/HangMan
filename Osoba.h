@@ -2,8 +2,9 @@
 // Created by User on 16-Dec-23.
 //
 
-#ifndef KVIZ_OSOBA_H
-#define KVIZ_OSOBA_H
+#ifndef HMPROBNI_OSOBA_H
+#define HMPROBNI_OSOBA_H
+
 
 #include <iostream>
 #include <cstring>
@@ -18,11 +19,12 @@ public:
     Osoba(string i, string p);
     void setIme();
     void setPrezime();
-    virtual string getIme();
-    virtual string getPrezime();
+    string getIme();
+    string getPrezime();
+    virtual void ispis();
     ~Osoba(){};
 };
 
 
 
-#endif //KVIZ_OSOBA_H
+#endif //HMPROBNI_OSOBA_H

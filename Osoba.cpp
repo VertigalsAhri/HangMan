@@ -1,5 +1,5 @@
 //
-// Created by User on 16-Dec-23.
+// Created by User on 13-Jan-24.
 //
 
 #include <iostream>
@@ -34,4 +34,9 @@ void Osoba::setIme() {
 void Osoba::setPrezime() {
     cout << "Unesite prezime: ";
     cin >> this->prezime;
+}
+
+void Osoba::ispis() {
+    cout << "Ime" << "\tprezime" << endl;
+    cout << this->getIme() << "\t" << this->getPrezime()<< endl;
 }
