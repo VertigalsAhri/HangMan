@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "HangMan::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-HangMan-Debug-fb364bca44d47c69becd.json",
+					"jsonFile" : "target-HangMan-Debug-1bb689e31814ed14e2e5.json",
 					"name" : "HangMan",
 					"projectIndex" : 0
 				}
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/DT User/OneDrive/Radna povr\u0161ina/HangMan/cmake-build-debug",
-		"source" : "C:/Users/DT User/OneDrive/Radna povr\u0161ina/HangMan"
+		"build" : "C:/Users/ena nina/Documents/GitHub/HangMan/cmake-build-debug",
+		"source" : "C:/Users/ena nina/Documents/GitHub/HangMan"
 	},
 	"version" : 
 	{

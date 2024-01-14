@@ -5,11 +5,15 @@
 #include <memory>
 #include <ctime>
 #include <cstdlib>
+#include <iomanip>
 #include "Korisnik.h"
 #include "Rijec.h"
 
+
 using namespace std;
 
+// izbrisat ptr!!!!
+// try and catch u rijeci i u trial
 
 // -------------------------------------------------GLOBALNE VARIJABLE------------------------------------------------------------
 
@@ -22,13 +26,14 @@ static int brKorisnika;
 vector<Korisnik> korisnici;
 vector<string> rijeci;
 
+//-------------------------------------------------------------------------------------------------------------------------------
+
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------VEKTOR RIJECI------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
 
 void VektorRijeci(){
     try {
-
         ifstream datoteka("rijeci.txt");
         if (datoteka.is_open()) {
 
@@ -36,8 +41,8 @@ void VektorRijeci(){
 
             string red;
             while (getline(datoteka, red)) {
-               rijec=red;
-               rijeci.push_back(rijec);
+                rijec=red;
+                rijeci.push_back(rijec);
             }
         } else {
             throw "Nemoguce otvoriti datoteku! \n";
@@ -49,78 +54,9 @@ void VektorRijeci(){
     }
 }
 
-
-// -------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------DODAJ RIJEC--------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
-
-void dodajRijec(){
-    int n;
-    cout<<"Unesite koliko zelite unijeti novih rijeci ";
-    cin>>n;
-    string rijec,a;
-    char r;
-    for(int i=0; i<n; i++){
-        cout<<"Unesite "<<i+1<<" rijec: ";
-        cin>>rijec;
-        for (int i=0; i<rijec.length(); i++){
-            r= toupper(rijec[i]);
-            a+=r;
-        }
-        rijec=a;
-        rijeci.push_back(rijec);
-
-    }
-    ofstream datoteka_;
-    datoteka_.open("rijeci.txt");
-    for(int i=0; i<rijeci.size(); i++){
-        datoteka_ << rijeci[i] <<"\n";
-    }
-
-    datoteka_.close();
-
-}
-
-// -------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------PREGELD RIJECI-----------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
-
-void pregledRijeci(){
-    cout << "----- PREGLED RIJECI -----" << endl;
-    for(int i =0; i<rijeci.size(); i++){
-        cout << i+1 << ". " << rijeci[i] << endl;
-    }
-
-}
-// -------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------BRISANJE RIJECI----------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
-
-
-void izbrisiRijec(){
-    pregledRijeci();
-    int n;
-    do{
-        cout << "Unesite redni broj rijeci koju zelite obrisati: ";
-        cin >> n;
-    }while(n<1 || n>rijeci.size());
-
-    rijeci.erase(rijeci.begin() + n - 1);
-    string filePath="C:\\NTP\\probniprojekat3\\rijeci.txt";
-    ofstream datoteka_;
-    datoteka_.open(filePath);
-    for(int i=0; i<rijeci.size(); i++){
-        datoteka_ << rijeci[i] <<"\n";
-    }
-
-    datoteka_.close();
-
-}
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------ADMIN VEKTOR-------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
-
-
 
 void VektorAdmina(){
     try {
@@ -128,10 +64,6 @@ void VektorAdmina(){
         if (datoteka.is_open()) {
 
             string ime, prezime, username, password;
-            double bodovi;
-            string strbodovi= to_string(bodovi);
-
-            int i = 0;
 
             string red;
             while (getline(datoteka, red)) {
@@ -143,16 +75,10 @@ void VektorAdmina(){
                 getline(datoteka, prezime);
                 getline(datoteka, username);
                 getline(datoteka, password);
-                getline(datoteka, strbodovi);
 
-                if (i >= 100) {
-                    cout << "Prekoracen je broj clanova u datoteci." << endl;
-                    break;
-                }
 
-                korisnici.emplace_back(ime, prezime, username, password, admin, bodovi);
+                korisnici.emplace_back(ime, prezime, username, password, admin, 0);
 
-                i++;
             }
         } else {
             throw "Nemoguce otvoriti datoteku! \n";
@@ -177,8 +103,6 @@ void VektorKorisnika(){
             double bodovi;
             string strbodovi;
 
-            int i = 0;
-
             string red;
             while (getline(datoteka, red)) {
                 if (red.empty()) {
@@ -191,16 +115,10 @@ void VektorKorisnika(){
                 getline(datoteka, password);
                 getline(datoteka, strbodovi);
 
-                if (i >= 100) {
-                    cout << "Prekoracen je broj clanova u datoteci." << endl;
-                    break;
-                }
-
                 bodovi=stod(strbodovi);
 
                 korisnici.emplace_back(ime, prezime, username, password, korisnik, bodovi);
 
-                i++;
             }
         }else{
             throw "Nemoguce otvoriti datoteku!\n " ;
@@ -211,6 +129,215 @@ void VektorKorisnika(){
         cout << poruka << endl;
     }
 }
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------ADMIN MENI FUNKCIJE---------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------PREGELD RIJECI-----------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void pregledRijeci(){
+    cout << "----- PREGLED RIJECI -----" << endl;
+    for(int i =0; i<rijeci.size(); i++){
+        cout << i+1 << ". " << rijeci[i] << endl;
+    }
+
+}
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------DODAJ RIJEC--------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void dodajRijec(){
+    int n;
+    cout<<"Unesite koliko zelite unijeti novih rijeci ";
+    cin>>n;
+    string rijec,a;
+    char r;
+    for(int i=0; i<n; i++){
+        cout<<"Unesite "<<i+1<<" rijec: ";
+        cin>>rijec;
+        for (int j=0; j<rijec.length(); j++){
+            r= toupper(rijec[j]);
+            a+=r;
+        }
+        rijec=a;
+        rijeci.push_back(rijec);
+        rijec="";
+        a="";
+
+    }
+    ofstream datoteka_;
+    datoteka_.open("rijeci.txt");
+    for(auto i:rijeci){
+        datoteka_ << i << endl;
+    }
+    /*for(int i=0; i<rijeci.size(); i++){
+        datoteka_ << rijeci[i] <<"\n";
+    }*/
+
+    datoteka_.close();
+
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------BRISANJE RIJECI----------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+void izbrisiRijec(){
+    pregledRijeci();
+    int n;
+    do{
+        try{
+            cout << "Unesite redni broj rijeci koju zelite obrisati: ";
+            cin >> n;
+            if(n<1 || n>rijeci.size()){
+                throw n;
+            }
+        }catch(int n){
+            cout << "Pogresan odabir. Ta rijec ne postoji!" << endl;
+        }
+    }while(n<1 || n>rijeci.size());
+
+    rijeci.erase(rijeci.begin() + n - 1);
+    ofstream datoteka_;
+    datoteka_.open("rijeci.txt");
+    for(int i=0; i<rijeci.size(); i++){
+        datoteka_ << rijeci[i] <<"\n";
+    }
+
+    datoteka_.close();
+    pregledRijeci();
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------PREGLED KORISNIKA-----------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void pregled_korisnika(){
+    cout << std::left << setw(3) << "" << std::left << setw(23) << "IME " << std::left << setw(20) << "PREZIME" << std::left << setw(20) << "USERNAME" << std::left << setw(20) << "BODOVI" << std::left << setw(20) << "BODOVI" << endl;
+    for(int i=0; i<korisnici.size()-4; i++){
+        cout << i+1 << ". ";
+
+
+            if(korisnici[i].getBodovi()>=75){
+                cout <<  "GOLD" << endl;
+            }else if(korisnici[i].getBodovi()>=50 && korisnici[i].getBodovi()<75 ){
+                cout << "SILVER" << endl;
+            }else if(korisnici[i].getBodovi()>=25 && korisnici[i].getBodovi()<50 ){
+                cout <<"BRONZE" << endl;
+            }else {
+                cout<< "NONE" << endl;
+            }
+
+    }
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------RESET BODOVA KORISNIKA------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void reset_bodova_korisnika(){
+    int n, broj_korisnika, br;
+    cout << "Resetiraj bodove: " << endl;
+    cout << "1. Jednom korisniku" << endl;
+    cout << "2. Dva ili viĹˇe korisnika" << endl;
+    cout << "3. Svim korisnicima" << endl;
+    do{
+        try{
+            cout << "Unesite izbor(1,2,3): ";
+            cin >> n;
+            if(n<1 || n>3){
+                throw n;
+            }
+        }catch(int n){
+            cout << endl<< "Pogresan unos. Pokusajte ponovo!" << endl;
+        }
+    }while(n<1 || n>3);
+
+    if(n==1){
+        pregled_korisnika();
+        do{
+            try{
+                cout << "Unesite redni broj korisnika kojem zelite resetirati bodove: ";
+                cin >> br;
+                if(br<1 || br>korisnici.size()-4){
+                    throw br;
+                }
+                if(korisnici[br-1].getBodovi()==0){
+                    cout << endl << "Korisnik vec ima 0 bodova. Izaberite drugog!" << endl;
+                }
+            }catch(int x){
+                cout <<endl<< "Unos van opsega broja korisnika. Pokusajte ponovo!"<< endl;
+            }
+
+        }while(br<1 || br>korisnici.size()-4 || korisnici[br-1].getBodovi()==0);
+
+
+
+        pregled_korisnika();
+
+    }else if(n==2){
+        pregled_korisnika();
+        do{
+            cout << "Unesite broj korisnika kojima zelite resetirati bodove: ";
+            cin >>broj_korisnika;
+            if(broj_korisnika<1 || broj_korisnika>korisnici.size()-4){
+                cout << "Ne postoji toliko korisnika. Unesite novu kolicinu. \n";
+            }
+        }while(broj_korisnika<1 || broj_korisnika>korisnici.size()-4);
+
+        for(int i=0; i<broj_korisnika; i++){
+            do{
+                try{
+                    cout << "Unesite redni broj korisnika kojem zelite resetirati bodove: ";
+                    cin >> br;
+                    if(br<1 || br>korisnici.size()-4){
+                        throw br;
+                    }
+                    if(korisnici[br-1].getBodovi()==0){
+                        cout << endl << "Korisnik vec ima 0 bodova. Izaberite drugog!" << endl;
+                    }
+                }catch(int n){
+                    cout <<endl<< "Unos van opsega broja korisnika. Pokusajte ponovo!"<< endl;
+                }
+
+            }while(br<1 || br>korisnici.size()-4 || korisnici[br-1].getBodovi()==0);
+
+        }
+
+        pregled_korisnika();
+
+
+
+
+    }else{
+        for(int i=0; i < korisnici.size()-4; i++){
+
+        }
+        pregled_korisnika();
+    }
+
+    ofstream datoteka_;
+    datoteka_.open("k.txt");
+    for(int i=0; i<korisnici.size()-4;i++){
+        datoteka_<< korisnici[i].getIme()<< "\n";
+        datoteka_<< korisnici[i].getPrezime()<< "\n";
+        datoteka_<< korisnici[i].getUsername()<< "\n";
+        datoteka_<< korisnici[i].getPassword()<< "\n";
+        datoteka_<<korisnici[i].getBodovi()<<"\n";
+        datoteka_<< "\n";
+    }
+    datoteka_.close();
+    cin.ignore();
+}
+
 
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------ADMIN MENI---------------------------------------------------------------
@@ -244,7 +371,7 @@ void AdminMeni(){
                 pregled_korisnika();
                 break;
             case 3:
-                brisanje_korisnika();
+
                 break;
             case 4:
                 dodajRijec();
@@ -315,16 +442,7 @@ void registracija_korisnika(){
     datoteka_<< "\n";
     datoteka_.close();
 }
-// -------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------PREGLED KORISNIKA-----------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
 
-void pregled_korisnika(){
-    cout << "Ime i prezime" << "\t Username " << "\t\t Bodovi" <<endl;
-    for(int i=0; i<korisnici.size()-4; i++){
-        cout << i+1 << ". " << "\t" << korisnici[i].getIme() << " " << korisnici[i].getPrezime() << "\t\t" <<korisnici[i] << endl;
-    }
-}
 // -------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------BRISANJE KORISNIKA----------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
