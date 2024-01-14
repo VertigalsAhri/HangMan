@@ -21,7 +21,11 @@ vector<Korisnik>& Rijec::getKorisnici(){
     return this->korisnici;
 }
 
-vector<Korisnik>&  Rijec::Pogadjanje(int i) {
+bool Rijec::Pobjeda() {
+    return this->sakrivenaRijec == this->rijec_pog;
+}
+
+vector<Korisnik>&  Rijec::Pogadjanje(int a) {
     for (char slovo = 'A'; slovo <= 'Z'; ++slovo) {
         slova.push_back(slovo);
     }
@@ -49,9 +53,9 @@ vector<Korisnik>&  Rijec::Pogadjanje(int i) {
             }
         }
         if(nadjeno){
-            korisnici[i].setBodovi(0.2);
+            korisnici[a].setBodovi(0.2);
         }else{
-            korisnici[i].setBodovi(-0.1);
+            korisnici[a].setBodovi(-0.1);
         }
 
         for (int i = 0; i < slova.size(); i++) {
