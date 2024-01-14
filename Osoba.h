@@ -2,8 +2,8 @@
 // Created by User on 16-Dec-23.
 //
 
-#ifndef HMPROBNI_OSOBA_H
-#define HMPROBNI_OSOBA_H
+#ifndef HANGMAN_KORISNIK_H
+#define HANGMAN_KORISNIK_H
 
 
 #include <iostream>
@@ -26,5 +26,4 @@ public:
 };
 
 
-
-#endif //HMPROBNI_OSOBA_H
+#endif //HANGMAN_KORISNIK_H
