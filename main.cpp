@@ -28,8 +28,8 @@ vector<string> rijeci;
 
 void VektorRijeci(){
     try {
-        string filePath = "C:\\HangMan\\rijeci.txt";
-        ifstream datoteka(filePath);
+
+        ifstream datoteka("rijeci.txt");
         if (datoteka.is_open()) {
 
             string rijec;
@@ -71,9 +71,8 @@ void dodajRijec(){
         rijeci.push_back(rijec);
 
     }
-    string filePath="C:\\NTP\\HangMan\\rijeci.txt";
     ofstream datoteka_;
-    datoteka_.open(filePath);
+    datoteka_.open("rijeci.txt");
     for(int i=0; i<rijeci.size(); i++){
         datoteka_ << rijeci[i] <<"\n";
     }
@@ -102,9 +101,7 @@ void pregledRijeci(){
 
 void VektorAdmina(){
     try {
-    string filePath = "C:\\Users\\User\\CLionProjects\\HangMan\\admini.txt"; //popraviti!!
-    //Ovo treba popraviti nisam znala drugacije
-        ifstream datoteka(filePath);
+        ifstream datoteka("admini.txt");
         if (datoteka.is_open()) {
 
             string ime, prezime, username, password;
@@ -150,8 +147,7 @@ void VektorAdmina(){
 
 void VektorKorisnika(){
     try{
-        string filePath="C:\\NTP\\probniprojekat3\\k.txt";
-        ifstream datoteka(filePath);
+        ifstream datoteka("k.txt");
         if (datoteka.is_open()) {
 
             string prezime, ime, username, password;
@@ -234,9 +230,9 @@ void registracija_korisnika(){
     k.setBodovi(0);
     korisnici.push_back(k);
 
-    string filePath="C:\\Users\\User\\CLionProjects\\probniprojekat2\\k.txt";
+
     ofstream datoteka_;
-    datoteka_.open(filePath, ios::app);
+    datoteka_.open("k.txt", ios::app);
     datoteka_<< k.getIme()<< "\n";
     datoteka_<< k.getPrezime()<< "\n";
     datoteka_<< k.getUsername()<< "\n";
@@ -293,7 +289,7 @@ int login(){
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------IGRA----------------------------------------------------------------
+// ------------------------------------------------------ISPIS----------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -311,16 +307,14 @@ void ispis(){
     korisnici=rijec.Pogadjanje(brKorisnika);
 
 
-
-    string filePath="C:\\Users\\User\\CLionProjects\\probniprojekat2\\k.txt";
     ofstream datoteka_;
-    datoteka_.open(filePath);
-    for(auto k:korisnici){
-        datoteka_<< k.getIme()<< "\n";
-        datoteka_<< k.getPrezime()<< "\n";
-        datoteka_<< k.getUsername()<< "\n";
-        datoteka_<< k.getPassword()<< "\n";
-        datoteka_<<k.getBodovi()<<"\n";
+    datoteka_.open("k.txt");
+    for(int i=0; i<korisnici.size(); i++){
+        datoteka_<< korisnici[i].getIme()<< "\n";
+        datoteka_<< korisnici[i].getPrezime()<< "\n";
+        datoteka_<< korisnici[i].getUsername()<< "\n";
+        datoteka_<< korisnici[i].getPassword()<< "\n";
+        datoteka_<<korisnici[i].getBodovi()<<"\n";
         datoteka_<< "\n";
     }
     datoteka_.close();
@@ -343,7 +337,6 @@ void score(){
 
 void loginMeni(){
     while (true) {
-        //cout << linija << "\t  LOGIN " << linija;
         cout << "1. Login" << endl;
         cout << "2. Registracija clana" << endl;
         cout << "0. Dodaj rijec" << endl;
