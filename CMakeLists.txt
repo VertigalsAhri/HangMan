@@ -12,4 +12,6 @@ add_executable(HangMan
         Osoba.cpp
         Osoba.h
         Rijec.h
-        Rijec.cpp)
+        Rijec.cpp
+        Trial.h
+        Trial.cpp)
