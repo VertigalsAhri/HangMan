@@ -2,8 +2,8 @@
 // Created by User on 16-Dec-23.
 //
 
-#ifndef HANGMAN_KORISNIK_H
-#define HANGMAN_KORISNIK_H
+#ifndef HANGMAN_OSOBA_H
+#define HANGMAN_OSOBA_H
 
 
 #include <iostream>
@@ -26,4 +26,4 @@ public:
 };
 
 
-#endif //HANGMAN_KORISNIK_H
+#endif //HANGMAN_OSOBA_H

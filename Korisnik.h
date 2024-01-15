@@ -14,7 +14,7 @@ using namespace std;
 
 enum Vrsta{korisnik=0, admin};
 
-class Korisnik:public Osoba {
+class Korisnik:public Osoba{
 
 private:
 

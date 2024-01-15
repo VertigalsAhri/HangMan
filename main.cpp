@@ -431,6 +431,144 @@ void rekurzivniSort(int n, vector<Korisnik>& k) {
     rekurzivniSort(n - 1, k);
 }
 
+void score(){
+    cout << std::left << setw(20) <<"IME" << std::left << setw(20) << "PREZIME" << std::left << setw(20)<< "USERNAME" << std::left << setw(20)<< "BODOVI" << std::left << setw(20)<<"RANK"<< endl;
+
+    rekurzivniSort(korisnici.size(), korisnici);
+
+    for(int i=0; i<korisnici.size()-4; i++){
+
+        if(korisnici[i].getBodovi()>=75){
+            cout << korisnici[i] <<  "GOLD" << endl;
+        }else if(korisnici[i].getBodovi()>=50 && korisnici[i].getBodovi()<75 ){
+            cout << korisnici[i]<< "SILVER" << endl;
+        }else if(korisnici[i].getBodovi()>=25 && korisnici[i].getBodovi()<50 ){
+            cout << korisnici[i]<<"BRONZE" << endl;
+        }else {
+            cout<<korisnici[i]<< "NONE" << endl;
+        }
+
+
+    }
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------LOGIN MENI FUNKCIJE---------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------PROVJERA USERNAME--------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+bool provjeraUsername(string& username) {
+    for (auto korisnik : korisnici) {
+        if (korisnik.getUsername() == username) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------REGISTRACIJA KORISNIKA--------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+void registracija_korisnika(){
+    unique_ptr<Korisnik> temp= make_unique<Korisnik>();
+    temp->setIme();
+    temp->setPrezime();
+    do{
+        temp->setUsername();
+        if(provjeraUsername(temp->getUsername())){
+            cout << "Taj username je vec zauzet. Molim unesite neki drugi!" << endl;
+        }
+    }while(provjeraUsername(temp->getUsername()));
+    temp->setPassword();
+    temp->setVrsta(korisnik);
+    temp->SETBodovi();
+
+    int mjesto=korisnici.size()-4;
+    auto it =korisnici.begin()+mjesto;
+    korisnici.emplace(it, *temp);
+
+    ofstream datoteka_;
+    datoteka_.open("k.txt", ios::app);
+    datoteka_<< temp->getIme()<< "\n";
+    datoteka_<< temp->getPrezime()<< "\n";
+    datoteka_<< temp->getUsername()<< "\n";
+    datoteka_<< temp->getPassword()<< "\n";
+    datoteka_<< temp->getBodovi()<<"\n";
+    datoteka_<< "\n";
+    datoteka_.close();
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------LOGIN----------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+int login(){
+    Korisnik k;
+    k.setUsername();
+    k.setPassword();
+    bool nadjeno=false;
+
+    for(int i=0; i<korisnici.size(); i++){
+        if(k.getUsername()==korisnici[i].getUsername() && k.getPassword()==korisnici[i].getPassword() && korisnici[i].getVrsta()==korisnik){
+            brKorisnika=i;
+            nadjeno=true;
+            clanMeni();
+        }else if(k.getUsername()==korisnici[i].getUsername() && k.getPassword()==korisnici[i].getPassword() && korisnici[i].getVrsta()==admin){
+            AdminMeni();
+            nadjeno=true;
+        }
+    }
+
+    if(!nadjeno){
+        cout << "CLAN NE POSTOJI!"<< endl; //PORUKA
+        login();
+    }
+
+    system("cls");
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------HOME MENI FUNKCIJE---------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------REGISTRACIJA KORISNIKA PREKO TRIAL OPCIJE--------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+void registracija_korisnika_trial(double a){
+    cout << " ----- REGISTRACIJA ----- " << endl;
+    unique_ptr<Korisnik> temp= make_unique<Korisnik>();
+    temp->setIme();
+    temp->setPrezime();
+    do{
+        temp->setUsername();
+    }while(provjeraUsername(temp->getUsername()));
+    temp->setPassword();
+    temp->setVrsta(korisnik);
+    temp->setBodovi(a);
+
+    int mjesto=korisnici.size()-4;
+    auto it =korisnici.begin()+mjesto;
+    korisnici.emplace(it, *temp);
+
+    ofstream datoteka_;
+    datoteka_.open("k.txt", ios::app);
+    datoteka_<< temp->getIme()<< "\n";
+    datoteka_<< temp->getPrezime()<< "\n";
+    datoteka_<< temp->getUsername()<< "\n";
+    datoteka_<< temp->getPassword()<< "\n";
+    datoteka_<< temp->getBodovi()<<"\n";
+    datoteka_<< "\n";
+    datoteka_.close();
+}
+
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------ADMIN MENI---------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
@@ -481,92 +619,9 @@ void AdminMeni(){
 }
 
 
-// -------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------PROVJERA USERNAME--------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
-
-bool provjeraUsername(string& username) {
-    for (auto korisnik : korisnici) {
-        if (korisnik.getUsername() == username) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// -------------------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------REGISTRACIJA KORISNIKA--------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
-
-void registracija_korisnika(){
-    unique_ptr<Korisnik> temp= make_unique<Korisnik>();
-    temp->setIme();
-    temp->setPrezime();
-    do{
-        temp->setUsername();
-    }while(provjeraUsername(temp->getUsername()));
-    temp->setPassword();
-    temp->setVrsta(korisnik);
-    temp->SETBodovi(0);
-    /*Korisnik k;
-    k.setIme();
-    k.setPrezime();
-    do{
-        k.setUsername();
-    }while(provjeraUsername(k.getUsername()));
-
-    k.setPassword();
-    k.setVrsta(korisnik);
-    k.SETBodovi(0);*/
-
-    int mjesto=korisnici.size()-4;
-    auto it =korisnici.begin()+mjesto;
-    korisnici.emplace(it, *temp);
-
-    string filePath="C:\\NTP\\probniprojekat3\\k.txt";
-    ofstream datoteka_;
-    datoteka_.open(filePath, ios::app);
-    datoteka_<< temp->getIme()<< "\n";
-    datoteka_<< temp->getPrezime()<< "\n";
-    datoteka_<< temp->getUsername()<< "\n";
-    datoteka_<< temp->getPassword()<< "\n";
-    datoteka_<< temp->getBodovi()<<"\n";
-    datoteka_<< "\n";
-    datoteka_.close();
-}
 
 
 
-// -------------------------------------------------------------------------------------------------------------------------------
-// ----------------------------------------------------------LOGIN----------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
-
-int login(){
-    Korisnik k;
-    k.setUsername();
-    k.setPassword();
-    for(int i=0; i<korisnici.size(); i++){
-        if(k.getUsername()==korisnici[i].getUsername() && k.getPassword()==korisnici[i].getPassword() && korisnici[i].getVrsta()==korisnik){
-            brKorisnika=i;
-            clanMeni();
-        }else if(k.getUsername()==korisnici[i].getUsername() && k.getPassword()==korisnici[i].getPassword() && korisnici[i].getVrsta()==admin){
-            AdminMeni();
-        }
-    }
-
-    system("cls");
-}
-
-// -------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------SCOREBOARD----------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
-
-void score(){
-    cout << "Username" << "\t Bodovi" << endl;
-    for(auto i: korisnici){
-        cout << i;
-    }
-}
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------LOGIN MENI---------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
