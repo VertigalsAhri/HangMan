@@ -33,7 +33,10 @@ public:
 
     bool Pobjeda();
 
-    vector<Korisnik>& Pogadjanje(int i);
+    virtual void Pogadjanje(int a);
+
+
+
 };
 
 
