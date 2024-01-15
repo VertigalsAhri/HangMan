@@ -8,12 +8,10 @@
 #include <iomanip>
 #include "Korisnik.h"
 #include "Rijec.h"
-
+#include "Trial.h"
 
 using namespace std;
 
-// izbrisat ptr!!!!
-// try and catch u rijeci i u trial
 
 // -------------------------------------------------GLOBALNE VARIJABLE------------------------------------------------------------
 
@@ -26,7 +24,7 @@ static int brKorisnika;
 vector<Korisnik> korisnici;
 vector<string> rijeci;
 
-//-------------------------------------------------------------------------------------------------------------------------------
+
 
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------VEKTOR RIJECI------------------------------------------------------------
@@ -143,8 +141,10 @@ void VektorKorisnika(){
 void pregledRijeci(){
     cout << "----- PREGLED RIJECI -----" << endl;
     for(int i =0; i<rijeci.size(); i++){
-        cout << i+1 << ". " << rijeci[i] << endl;
+        cout << "" << i+1 << ". " << rijeci[i] << endl;
     }
+
+    cout << endl << endl;
 
 }
 
@@ -221,20 +221,20 @@ void izbrisiRijec(){
 // -------------------------------------------------------------------------------------------------------------------------------
 
 void pregled_korisnika(){
-    cout << std::left << setw(3) << "" << std::left << setw(23) << "IME " << std::left << setw(20) << "PREZIME" << std::left << setw(20) << "USERNAME" << std::left << setw(20) << "BODOVI" << std::left << setw(20) << "BODOVI" << endl;
+    cout << std::left << setw(3) << "" << std::left << setw(20) << "IME " << std::left << setw(20) << "PREZIME" << std::left << setw(20) << "USERNAME" << std::left << setw(20) << "BODOVI" << std::left << setw(20) << "RANK" << endl;
     for(int i=0; i<korisnici.size()-4; i++){
         cout << i+1 << ". ";
+        korisnici[i].ispis();
 
-
-            if(korisnici[i].getBodovi()>=75){
-                cout <<  "GOLD" << endl;
-            }else if(korisnici[i].getBodovi()>=50 && korisnici[i].getBodovi()<75 ){
-                cout << "SILVER" << endl;
-            }else if(korisnici[i].getBodovi()>=25 && korisnici[i].getBodovi()<50 ){
-                cout <<"BRONZE" << endl;
-            }else {
-                cout<< "NONE" << endl;
-            }
+        if(korisnici[i].getBodovi()>=75){
+            cout <<  "GOLD" << endl;
+        }else if(korisnici[i].getBodovi()>=50 && korisnici[i].getBodovi()<75 ){
+            cout << "SILVER" << endl;
+        }else if(korisnici[i].getBodovi()>=25 && korisnici[i].getBodovi()<50 ){
+            cout <<"BRONZE" << endl;
+        }else {
+            cout<< "NONE" << endl;
+        }
 
     }
 }
@@ -247,7 +247,7 @@ void reset_bodova_korisnika(){
     int n, broj_korisnika, br;
     cout << "Resetiraj bodove: " << endl;
     cout << "1. Jednom korisniku" << endl;
-    cout << "2. Dva ili viĹˇe korisnika" << endl;
+    cout << "2. Dva ili više korisnika" << endl;
     cout << "3. Svim korisnicima" << endl;
     do{
         try{
@@ -257,7 +257,7 @@ void reset_bodova_korisnika(){
                 throw n;
             }
         }catch(int n){
-            cout << endl<< "Pogresan unos. Pokusajte ponovo!" << endl;
+            cout << endl<< "\t\tPogresan unos. Pokusajte ponovo!" << endl<< endl;
         }
     }while(n<1 || n>3);
 
@@ -271,16 +271,16 @@ void reset_bodova_korisnika(){
                     throw br;
                 }
                 if(korisnici[br-1].getBodovi()==0){
-                    cout << endl << "Korisnik vec ima 0 bodova. Izaberite drugog!" << endl;
+                    cout << endl << "\t\tKorisnik vec ima 0 bodova. Izaberite drugog!" << endl<< endl;
                 }
             }catch(int x){
-                cout <<endl<< "Unos van opsega broja korisnika. Pokusajte ponovo!"<< endl;
+                cout <<endl<< "\t\tUnos van opsega broja korisnika. Pokusajte ponovo!"<< endl<< endl;
             }
 
         }while(br<1 || br>korisnici.size()-4 || korisnici[br-1].getBodovi()==0);
 
 
-
+        korisnici[br-1].SETBodovi();
         pregled_korisnika();
 
     }else if(n==2){
@@ -289,7 +289,7 @@ void reset_bodova_korisnika(){
             cout << "Unesite broj korisnika kojima zelite resetirati bodove: ";
             cin >>broj_korisnika;
             if(broj_korisnika<1 || broj_korisnika>korisnici.size()-4){
-                cout << "Ne postoji toliko korisnika. Unesite novu kolicinu. \n";
+                cout << "\t\tNe postoji toliko korisnika. Unesite novu kolicinu. \n" << endl;
             }
         }while(broj_korisnika<1 || broj_korisnika>korisnici.size()-4);
 
@@ -302,14 +302,14 @@ void reset_bodova_korisnika(){
                         throw br;
                     }
                     if(korisnici[br-1].getBodovi()==0){
-                        cout << endl << "Korisnik vec ima 0 bodova. Izaberite drugog!" << endl;
+                        cout << endl << "\t\tKorisnik vec ima 0 bodova. Izaberite drugog!" << endl<< endl;
                     }
                 }catch(int n){
-                    cout <<endl<< "Unos van opsega broja korisnika. Pokusajte ponovo!"<< endl;
+                    cout <<endl<< "\t\tUnos van opsega broja korisnika. Pokusajte ponovo!"<< endl << endl ;
                 }
 
             }while(br<1 || br>korisnici.size()-4 || korisnici[br-1].getBodovi()==0);
-
+            korisnici[br-1].SETBodovi();
         }
 
         pregled_korisnika();
@@ -319,7 +319,7 @@ void reset_bodova_korisnika(){
 
     }else{
         for(int i=0; i < korisnici.size()-4; i++){
-
+            korisnici[i].SETBodovi();
         }
         pregled_korisnika();
     }
@@ -413,7 +413,6 @@ void igra(){
 
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------SCOREBOARD---------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
@@ -451,11 +450,6 @@ void score(){
 
     }
 }
-
-// -------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------LOGIN MENI FUNKCIJE---------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------------------------------
-
 
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------PROVJERA USERNAME--------------------------------------------------------
@@ -570,6 +564,51 @@ void registracija_korisnika_trial(double a){
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------TRIAL FUNKCIJA--------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+void trial(){
+    srand(time(nullptr));
+    rand();
+    int broj=rand()%rijeci.size();
+    string rijec=rijeci[broj];
+    Trial t(rijec);
+    double bod;
+    t.Pogadjanje(0);
+    bod=t.getBodovi();
+    int izbor;
+
+    do{
+        try{
+            cout << "Da li zelite da se uclanite u turnir?" << endl;
+            cout << "1. DA " << endl << "2. NE" << endl;
+            cout << "Izbor: ";
+            cin >> izbor;
+            if(izbor<1 || izbor>2){
+                throw izbor;
+            }
+        }catch(int izb){
+            cout <<endl<< "Unos van opsega. Pokusajte ponovo!"<< endl;
+        }
+
+    }while(izbor<1 || izbor>2);
+
+    if(izbor==1){
+        registracija_korisnika_trial(bod);
+        clanMeni();
+    }
+
+
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------SAMO MENI FUNKCIJE-------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------ADMIN MENI---------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------
 
@@ -584,13 +623,24 @@ void AdminMeni(){
         cout << "3. Brisanje korisnika" << endl;
         cout << "4. Dodaj rijec\n";
         cout << "5. Ukloni rijec\n";
-        cout << "6. EXIT\n";
-        //RESETIRAJ BODOVE SVIH IGRACA
+        cout << "6. Resetiraj bodove\n";
+        cout << "7. EXIT\n";
 
         int izbor;
+        do{
+            try{
+                cout << "Unesite izbor: ";
+                cin >> izbor;
+                if(izbor<1 || izbor>7){
+                    throw izbor;
+                }
+            }catch(int n){
+                cout << "Pogresan unos. Pokusajte ponovo!" << endl;
+            }
 
-        cout << "Unesite izbor: ";
-        cin >> izbor;
+        }while(izbor<1 || izbor>7);
+
+
 
         switch (izbor) {
 
@@ -601,25 +651,27 @@ void AdminMeni(){
                 pregled_korisnika();
                 break;
             case 3:
-
+                brisanje_korisnika();
                 break;
             case 4:
                 dodajRijec();
                 break;
             case 5:
                 izbrisiRijec();
+                break;
                 system("CLS");
             case 6:
+                reset_bodova_korisnika();
+                break;
+            case 7:
                 loginMeni();
+                break;
             default:
                 cout << "Nepostojeca opcija!" << endl;
         }
     }
 
 }
-
-
-
 
 
 // -------------------------------------------------------------------------------------------------------------------------------
@@ -631,27 +683,31 @@ void loginMeni(){
     while (true) {
         cout << "1. Login" << endl;
         cout << "2. Registracija clana" << endl;
-        cout << "0. Dodaj rijec" << endl;
         cout << "3. Exit" << endl;
 
         int opcija;
-        cout << "Izaberite opciju: ";
-        cin >> opcija;
+        do{
+            try{
+                cout << "Izaberite opciju: ";
+                cin >> opcija;
+                if(opcija<1 || opcija>3){
+                    throw opcija;
+                }
+            }catch(int n){
+                cout << "Pogresan unos. Pokusajte ponovo!" << endl;
+            }
+
+        }while(opcija<1 || opcija>3);
+
         system("cls");
         switch (opcija) {
             case 1:
                 login();
                 system("cls");
-
                 break;
             case 2:
                 registracija_korisnika();
                 system("cls");
-                break;
-            case 0:
-
-                system("cls");
-
                 break;
             case 3:
                 cout << "Exiting..." << endl;
@@ -665,6 +721,52 @@ void loginMeni(){
     }
 }
 
+// -------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------HOME MENI----------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
+
+
+void homeMeni(){
+    while (true) {
+        cout << "1. Trial" << endl;
+        cout << "2. Turnir" << endl;
+        cout << "3. Exit" << endl;
+
+        int opcija;
+        do{
+            try{
+                cout << "Izaberite opciju: ";
+                cin >> opcija;
+                if(opcija<1 || opcija>3){
+                    throw opcija;
+                }
+            }catch(int n){
+                cout << "Pogresan unos. Pokusajte ponovo!" << endl;
+            }
+
+        }while(opcija<1 || opcija>3);
+        // system("cls");
+        switch (opcija) {
+            case 1:
+                trial();
+                //system("cls");
+
+                break;
+            case 2:
+                loginMeni();
+                system("cls");
+                break;
+            case 3:
+                cout << "Exiting..." << endl;
+                system("cls");
+
+                exit(0);
+
+            default:
+                cout << "Netacan odabir. Pokusajte ponovo." << endl;
+        }
+    }
+}
 
 // -------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------CLAN MENI----------------------------------------------------------------
@@ -675,20 +777,29 @@ void clanMeni() {
     while (true) {
 
         cout << "\t \t MENI" << endl;
-        //cout << linija;
         cout << "1. Zapocni igru " << endl;
         cout << "2. Scoreboard " << endl;
         cout << "3. EXIT " << endl;
 
         int izbor;
 
-        cout << "Unesite izbor: ";
-        cin >> izbor;
+        do{
+            try{
+                cout << "Izaberite opciju: ";
+                cin >> izbor;
+                if(izbor<1 || izbor>3){
+                    throw izbor;
+                }
+            }catch(int n){
+                cout << "Pogresan unos. Pokusajte ponovo!" << endl;
+            }
+
+        }while(izbor<1 || izbor>3);
 
         switch (izbor) {
 
             case 1:
-
+                igra();
                 break;
             case 2:
                 cin.ignore();
@@ -708,11 +819,11 @@ void clanMeni() {
 // -------------------------------------------------------------------------------------------------------------------------------
 
 int main() {
-
+    VektorRijeci();
     VektorKorisnika();
     VektorAdmina();
 
-    loginMeni();
+    homeMeni();
 
     return 0;
 }
